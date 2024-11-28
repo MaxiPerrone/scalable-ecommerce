@@ -8,9 +8,13 @@ spring:
           - Path=/api/products/**
         filters:
           - StripPrefix=2
+          - CookieGateway=Test message products, user, test
       - id: items
         uri: lb://items
         predicates:
           - Path=/api/items/**
         filters:
           - StripPrefix=2
+          - AddRequestHeader=token-request, 12frf34f34fj3u4f34
+          - AddResponseHeader=token-response, 345436546755
+          - AddRequestParameter=name, Test
