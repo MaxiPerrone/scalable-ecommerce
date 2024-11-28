@@ -1,12 +1,9 @@
 package com.springcloud.ecommerce.gateway.filters;
 
-import org.bouncycastle.jcajce.provider.asymmetric.EXTERNAL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
