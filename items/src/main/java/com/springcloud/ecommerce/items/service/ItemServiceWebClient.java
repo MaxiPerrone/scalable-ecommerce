@@ -6,6 +6,7 @@ import java.util.Random;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
+import com.springcloud.ecommerce.items.view.ItemRequest;
 import com.springcloud.ecommerce.items.view.ItemResponse;
 import com.springcloud.ecommerce.items.view.ItemsResponse;
 import com.springcloud.ecommerce.items.view.Product;
@@ -51,6 +52,33 @@ public class ItemServiceWebClient implements ItemService {
             .block();
 
             return itemResponse(product);
+    }
+
+    @Override
+    public ItemResponse create(ItemRequest request) {
+        Product product = client
+            .build()
+            .post()
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(request)
+            .retrieve()
+            .bodyToMono(Product.class)
+            .block();
+
+            return itemResponse(product);
+    }
+
+    @Override
+    public void delete(long id) {
+        Map<String, Long> params = new HashMap<>();
+        params.put("id", id);
+
+        client.build()
+            .delete()
+            .uri("/{id}", params)
+            .retrieve()
+            .bodyToMono(Void.class)
+            .block();
     }
 
     private ItemResponse itemResponse(Product product) {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springcloud.ecommerce.items.client.ProductFeignClient;
+import com.springcloud.ecommerce.items.view.ItemRequest;
 import com.springcloud.ecommerce.items.view.ItemResponse;
 import com.springcloud.ecommerce.items.view.ItemsResponse;
 import com.springcloud.ecommerce.items.view.Product;
@@ -37,6 +38,17 @@ public class ItemServiceFeign implements ItemService {
         } catch(FeignClientException e) {
             return null;
         }
+    }
+
+    @Override
+    public ItemResponse create(ItemRequest request) {
+        Product product = productAPIClient.create(request);
+        return itemResponse(product);
+    }
+
+    @Override
+    public void delete(long id) {
+        productAPIClient.delete(id);
     }
 
     private ItemResponse itemResponse(Product product) {

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springcloud.ecommerce.products.domain.Product;
 import com.springcloud.ecommerce.products.repository.ProductRepository;
+import com.springcloud.ecommerce.products.view.ProductRequest;
 import com.springcloud.ecommerce.products.view.ProductResponse;
 import com.springcloud.ecommerce.products.view.ProductsResponse;
 
@@ -41,6 +42,25 @@ public class ProductServiceImpl implements ProductService {
         }
                     
         return null;
+    }
+
+    @Override
+    @Transactional
+    public ProductResponse create(ProductRequest request) {
+        var product = new Product();
+        product.setName(request.getName());
+        product.setPrice(request.getPrice());
+        product.setCreateAt(request.getCreatedTime());
+
+        var response = repository.save(product);
+        
+        return productResponse(response);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
             
     private ProductResponse productResponse(Product product) {
